@@ -6,7 +6,7 @@
 
 <html>
 <head>
-    <title>Users list</title>
+    <title>Patients list</title>
     <style>
         .normal {
             color: green;
@@ -20,8 +20,8 @@
 <body>
 <section>
     <h3><a href="index.html">Home</a></h3>
-    <h2>Users</h2>
-    <a href="users?action=add">Add User</a>
+    <h2>Patients</h2>
+    <a href="patients?action=add">Add Patient</a>
     <hr/>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
@@ -29,16 +29,16 @@
             <th>First Name</th>
             <th>Middle Name</th>
             <th>Surname</th>
-            <th>Position</th>
+            <th>Insurance Id</th>
         </tr>
         </thead>
-        <c:forEach items="${users}" var="user">
-            <jsp:useBean id="user" scope="page" type="ru.javaweb.tracker.model.User"/>
+        <c:forEach items="${patients}" var="patient">
+            <jsp:useBean id="patient" scope="page" type="ru.javaweb.tracker.model.Patient"/>
             <tr>
-                <td>${user.firstName}</td>
-                <td>${user.middleName}</td>
-                <td>${user.lastName}</td>
-                <td>${user.position}</td>
+                <td>${patient.firstName}</td>
+                <td>${patient.middleName}</td>
+                <td>${patient.lastName}</td>
+                <td>${patient.insuranceId}</td>
             </tr>
         </c:forEach>
     </table>
