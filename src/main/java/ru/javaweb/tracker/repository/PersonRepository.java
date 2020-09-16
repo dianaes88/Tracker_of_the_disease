@@ -4,7 +4,7 @@ import ru.javaweb.tracker.model.Person;
 
 import java.util.Collection;
 
-public interface Supplement<T extends Person> {
+public interface PersonRepository<T extends Person> {
     T save (T element);
 
     void delete(int id);
