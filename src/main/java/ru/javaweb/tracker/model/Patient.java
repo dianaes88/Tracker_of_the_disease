@@ -6,7 +6,11 @@ public class Patient extends Person {
     private Integer insuranceId;
 
     public Patient(String firstName, String middleName, String lastName, Integer insuranceId) {
-        super(firstName, middleName, lastName);
+        this(firstName, middleName, lastName, insuranceId, null);
+    }
+
+    public Patient(String firstName, String middleName, String lastName, Integer insuranceId,Integer id) {
+        super(firstName, middleName, lastName, id);
         this.insuranceId = insuranceId;
     }
 

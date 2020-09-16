@@ -5,8 +5,12 @@ import java.util.Objects;
 public class User extends Person {
     private String position;
 
-    public User(String firstName, String lastName, String middleName, String position) {
-        super(firstName, lastName, middleName);
+    public User(String firstName, String middleName, String lastName, String position) {
+        this(firstName, middleName, lastName, position, null);
+    }
+
+    public User(String firstName, String lastName, String middleName, String position, Integer id) {
+        super(firstName, lastName, middleName, id);
         this.position = position;
     }
 

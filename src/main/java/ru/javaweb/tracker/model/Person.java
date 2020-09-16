@@ -6,11 +6,17 @@ public abstract class Person {
     private String firstName;
     private String middleName;
     private String lastName;
+    private Integer id;
 
     public Person(String firstName, String middleName, String lastName) {
+        this(firstName, middleName, lastName, null);
+    }
+
+    public Person(String firstName, String middleName, String lastName, Integer id) {
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
+        this.id = id;
     }
 
     public Person() {
@@ -40,6 +46,18 @@ public abstract class Person {
         this.lastName = lastName;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public boolean isNew() {
+        return id == null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,18 +65,22 @@ public abstract class Person {
         Person person = (Person) o;
         return Objects.equals(firstName, person.firstName) &&
                 Objects.equals(middleName, person.middleName) &&
-                Objects.equals(lastName, person.lastName);
+                Objects.equals(lastName, person.lastName) &&
+                Objects.equals(id, person.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, middleName, lastName);
+        return Objects.hash(firstName, middleName, lastName, id);
     }
 
     @Override
     public String toString() {
-        return "firstName='" + firstName + '\'' +
+        return "Person{" +
+                ", id=" + id +
+                "firstName='" + firstName + '\'' +
                 ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'';
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

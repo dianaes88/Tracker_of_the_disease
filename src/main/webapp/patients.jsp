@@ -21,7 +21,7 @@
 <section>
     <h3><a href="index.html">Home</a></h3>
     <h2>Patients</h2>
-    <a href="patients?action=add">Add Patient</a>
+    <a href="patients?action=create">Add Patient</a>
     <hr/>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>
@@ -30,6 +30,8 @@
             <th>Middle Name</th>
             <th>Surname</th>
             <th>Insurance Id</th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <c:forEach items="${patients}" var="patient">
@@ -39,6 +41,8 @@
                 <td>${patient.middleName}</td>
                 <td>${patient.lastName}</td>
                 <td>${patient.insuranceId}</td>
+                <td><a href="patients?action=update&id=${patient.id}">Update</a></td>
+                <td><a href="patients?action=delete&id=${patient.id}">Delete</a></td>
             </tr>
         </c:forEach>
     </table>
