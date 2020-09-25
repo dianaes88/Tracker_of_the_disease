@@ -1,7 +1,6 @@
 package ru.javaweb.tracker.repository;
 
 import ru.javaweb.tracker.model.Patient;
-import ru.javaweb.tracker.model.Person;
 import ru.javaweb.tracker.util.PatientsUtil;
 
 import java.util.Collection;

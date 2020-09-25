@@ -1,10 +1,10 @@
-package ru.javaweb.tracker.web;
+package ru.javaweb.tracker.web.patient;
 
 import org.slf4j.Logger;
 import ru.javaweb.tracker.model.Patient;
 import ru.javaweb.tracker.repository.InMemoryPatientRepositoryImpl;
 import ru.javaweb.tracker.repository.PersonRepository;
-import ru.javaweb.tracker.util.PatientsUtil;
+import ru.javaweb.tracker.web.user.UserServlet;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

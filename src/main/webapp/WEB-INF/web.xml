@@ -8,7 +8,7 @@
 
     <servlet>
         <servlet-name>userServlet</servlet-name>
-        <servlet-class>ru.javaweb.tracker.web.UserServlet</servlet-class>
+        <servlet-class>ru.javaweb.tracker.web.user.UserServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
 
@@ -19,7 +19,7 @@
 
     <servlet>
         <servlet-name>patientServlet</servlet-name>
-        <servlet-class>ru.javaweb.tracker.web.PatientServlet</servlet-class>
+        <servlet-class>ru.javaweb.tracker.web.patient.PatientServlet</servlet-class>
         <load-on-startup>0</load-on-startup>
     </servlet>
     <servlet-mapping>
