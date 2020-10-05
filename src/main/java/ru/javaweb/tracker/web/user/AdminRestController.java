@@ -1,9 +1,10 @@
 package ru.javaweb.tracker.web.user;
 
+import org.springframework.stereotype.Controller;
 import ru.javaweb.tracker.model.User;
 
 import java.util.List;
-
+@Controller
 public class AdminRestController extends AbstractUserController {
     @Override
     public List<User> getAll() {
