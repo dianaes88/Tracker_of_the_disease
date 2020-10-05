@@ -1,7 +1,6 @@
 package ru.javaweb.tracker.util;
 
 import ru.javaweb.tracker.model.Patient;
-import ru.javaweb.tracker.model.User;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,10 +9,10 @@ import java.util.stream.Collectors;
 
 public class PatientsUtil {
     public static final List<Patient> PATIENTS = Arrays.asList(
-            new Patient("Сванте", null, "Свантесон", 12345),
-            new Patient("Пеппи", "Длинный", "Чулок", 678),
-            new Patient("Буратино", "Деревянное", "Полено", 888),
-            new Patient("Девочка", "Красная", "Шапочка", 77777)
+            new Patient("Сванте", null, "Свантесон", 12345, 1),
+            new Patient("Пеппи", "Длинный", "Чулок", 678, 1),
+            new Patient("Буратино", "Деревянное", "Полено", 888, 1),
+            new Patient("Девочка", "Красная", "Шапочка", 77777, 1)
 
     );
 

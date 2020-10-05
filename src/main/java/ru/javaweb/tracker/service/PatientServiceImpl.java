@@ -1,16 +1,22 @@
 package ru.javaweb.tracker.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.javaweb.tracker.model.Patient;
 import ru.javaweb.tracker.repository.PatientRepository;
-import ru.javaweb.tracker.repository.PersonRepository;
 import ru.javaweb.tracker.util.exception.NotFoundException;
 
 import java.util.List;
 
 import static ru.javaweb.tracker.util.ValidationUtil.checkNotFoundWithId;
-
+@Service
 public class PatientServiceImpl implements PatientService {
+    @Autowired
     private PatientRepository repository;
+
+    public void setRepository(PatientRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public Patient create(Patient patient) {
@@ -19,7 +25,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void delete(int id) throws NotFoundException {
-        checkNotFoundWithId(repository.delete(id), id);
+        repository.delete(id);
     }
 
     @Override
@@ -34,6 +40,6 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public List<Patient> getAll() {
-        return (List<Patient>) repository.getAll();
+        return repository.getAll();
     }
 }

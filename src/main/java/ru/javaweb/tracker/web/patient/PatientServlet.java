@@ -1,10 +1,8 @@
 package ru.javaweb.tracker.web.patient;
 
-import org.slf4j.Logger;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javaweb.tracker.model.Patient;
-import ru.javaweb.tracker.repository.InMemoryPatientRepositoryImpl;
-import ru.javaweb.tracker.repository.PersonRepository;
-import ru.javaweb.tracker.web.user.UserServlet;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -17,13 +15,20 @@ import java.util.Objects;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public class PatientServlet extends HttpServlet {
-    private PersonRepository<Patient> repository;
-    private static final Logger log = getLogger(UserServlet.class);
+    private ConfigurableApplicationContext springContext;
+    private PatientRestController patientRestController;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        repository = new InMemoryPatientRepositoryImpl();
+        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml");
+        patientRestController = springContext.getBean(PatientRestController.class);
+    }
+
+    @Override
+    public void destroy() {
+        springContext.close();
+        super.destroy();
     }
 
     @Override
@@ -32,10 +37,13 @@ public class PatientServlet extends HttpServlet {
         String id = req.getParameter("id");
 
         Patient patient = new Patient(req.getParameter("firstName"), req.getParameter("middleName"),
-                req.getParameter("lastName"), Integer.valueOf(req.getParameter("insuranceId")), id.isEmpty() ? null : Integer.valueOf(id)
-                );
-        log.info(patient.isNew() ? "Create patient{}" : "Update patient{}", patient);
-        repository.save(patient);
+                req.getParameter("lastName"), Integer.valueOf(req.getParameter("insuranceId")), id.isEmpty() ? null : Integer.valueOf(id),
+                1);
+        if (req.getParameter("id").isEmpty())
+            patientRestController.create(patient);
+        else
+            patientRestController.update(patient, patient.getId());
+
         resp.sendRedirect("patients");
     }
 
@@ -45,22 +53,20 @@ public class PatientServlet extends HttpServlet {
         switch (action == null ? "all" : action) {
             case "delete":
                 int id = getId(request);
-                log.info("Delete patient {}", id);
-                repository.delete(id);
+                patientRestController.delete(id);
                 response.sendRedirect("patients");
                 break;
             case "create":
             case "update":
                 final Patient patient = "create".equals(action) ?
-                        new Patient():
-                        repository.get(getId(request));
+                        new Patient(1):
+                        patientRestController.get(getId(request));
                 request.setAttribute("patient", patient);
                 request.getRequestDispatcher("/patientForm.jsp").forward(request, response);
                 break;
             case "all":
             default:
-                log.info("getAllPatients");
-                request.setAttribute("patients", repository.getAll());
+                request.setAttribute("patients", patientRestController.getAll());
                 request.getRequestDispatcher("/patients.jsp").forward(request, response);
         }
     }

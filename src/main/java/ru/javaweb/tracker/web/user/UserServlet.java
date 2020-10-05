@@ -2,8 +2,8 @@ package ru.javaweb.tracker.web.user;
 
 import org.slf4j.Logger;
 import ru.javaweb.tracker.model.User;
-import ru.javaweb.tracker.repository.InMemoryUserRepositoryImpl;
-import ru.javaweb.tracker.repository.PersonRepository;
+import ru.javaweb.tracker.repository.UserRepository;
+import ru.javaweb.tracker.repository.mock.InMemoryUserRepositoryImpl;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class UserServlet extends HttpServlet {
     private static final Logger log = getLogger(UserServlet.class);
-    private PersonRepository<User> repository;
+    private UserRepository repository;
 
     @Override
     public void init(ServletConfig config) throws ServletException {

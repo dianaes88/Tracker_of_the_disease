@@ -8,13 +8,10 @@ public interface PatientRepository {
     Patient save(Patient user);
 
     // false if not found
-    boolean delete(int id);
+    void delete(int id);
 
     // null if not found
     Patient get(int id);
-
-    // null if not found
-    Patient getByEmail(String email);
 
     List<Patient> getAll();
 }

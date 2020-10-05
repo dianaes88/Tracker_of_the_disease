@@ -6,7 +6,6 @@ public abstract class Person extends AbstractBaseEntity {
     private String firstName;
     private String middleName;
     private String lastName;
-    private Integer id;
 
     public Person(String firstName, String middleName, String lastName) {
         this(firstName, middleName, lastName, null);

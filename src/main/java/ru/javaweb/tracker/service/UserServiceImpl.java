@@ -1,12 +1,9 @@
 package ru.javaweb.tracker.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.javaweb.tracker.model.User;
-import ru.javaweb.tracker.repository.PersonRepository;
 import ru.javaweb.tracker.repository.UserRepository;
-import ru.javaweb.tracker.repository.mock.MockUserRepositoryImpl;
 import ru.javaweb.tracker.util.exception.NotFoundException;
 
 import java.util.List;

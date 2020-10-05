@@ -4,18 +4,21 @@ import java.util.Objects;
 
 public class Patient extends Person {
     private Integer insuranceId;
+    private final int userID;
 
-    public Patient(String firstName, String middleName, String lastName, Integer insuranceId) {
-        this(firstName, middleName, lastName, insuranceId, null);
+    public Patient(String firstName, String middleName, String lastName, Integer insuranceId, int userID) {
+        this(firstName, middleName, lastName, insuranceId, null, userID);
     }
 
-    public Patient(String firstName, String middleName, String lastName, Integer insuranceId,Integer id) {
+    public Patient(String firstName, String middleName, String lastName, Integer insuranceId, Integer id, int userID) {
         super(firstName, middleName, lastName, id);
         this.insuranceId = insuranceId;
+        this.userID = userID;
     }
 
-    public Patient() {
+    public Patient(int userID) {
         super();
+        this.userID = userID;
     }
 
     public Integer getInsuranceId() {
@@ -24,6 +27,10 @@ public class Patient extends Person {
 
     public void setInsuranceId(Integer insuranceId) {
         this.insuranceId = insuranceId;
+    }
+
+    public int getUserID() {
+        return userID;
     }
 
     @Override
@@ -45,6 +52,7 @@ public class Patient extends Person {
         return "Patient{" +
                 super.toString() +
                 "insuranceId=" + insuranceId +
+                "userId=" + userID +
                 '}';
     }
 }
