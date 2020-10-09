@@ -6,13 +6,13 @@ import ru.javaweb.tracker.util.exception.NotFoundException;
 import java.util.List;
 
 public interface PatientService {
-    Patient create(Patient patient);
+    Patient create(Patient patient, int userId);
 
-    void delete(int id) throws NotFoundException;
+    void delete(int id, int userId) throws NotFoundException;
 
-    Patient get(int id) throws NotFoundException;
+    Patient get(int id, int userId) throws NotFoundException;
 
-    void update(Patient user);
+    void update(Patient user, int userId);
 
-    List<Patient> getAll();
+    List<Patient> getAll(int userId);
 }

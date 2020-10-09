@@ -16,6 +16,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Repository
 public class InMemoryUserRepositoryImpl implements UserRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepositoryImpl.class);
+    public static final int USER_ID = 1;
+    public static final int ADMIN_ID = 2;
+
     private Map<Integer, User> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
@@ -28,9 +31,10 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
         log.info("save {}", user);
         if (user.isNew()) {
             user.setId(counter.incrementAndGet());
+            repository.put(user.getId(), user);
+            return user;
         }
-        repository.put(user.getId(), user);
-        return user;
+        return repository.computeIfPresent(user.getId(), (id, oldUser) -> user);
     }
 
     @Override
@@ -48,6 +52,6 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getAll() {
         log.info("getAll");
-        return new ArrayList(repository.values());
+        return UsersUtil.getUsersByName(repository.values());
     }
 }

@@ -11,35 +11,35 @@ import java.util.List;
 import static ru.javaweb.tracker.util.ValidationUtil.checkNotFoundWithId;
 @Service
 public class PatientServiceImpl implements PatientService {
-    @Autowired
-    private PatientRepository repository;
+    private final PatientRepository repository;
 
-    public void setRepository(PatientRepository repository) {
+    @Autowired
+    public PatientServiceImpl(PatientRepository repository) {
         this.repository = repository;
     }
 
     @Override
-    public Patient create(Patient patient) {
-        return repository.save(patient);
+    public Patient create(Patient patient, int userId) {
+        return repository.save(patient, userId);
     }
 
     @Override
-    public void delete(int id) throws NotFoundException {
-        repository.delete(id);
+    public void delete(int id, int userId) throws NotFoundException {
+        repository.delete(id, userId);
     }
 
     @Override
-    public Patient get(int id) throws NotFoundException {
-        return checkNotFoundWithId(repository.get(id), id);
+    public Patient get(int id, int userId) throws NotFoundException {
+        return checkNotFoundWithId(repository.get(id, userId), id);
     }
 
     @Override
-    public void update(Patient patient) {
-        repository.save(patient);
+    public void update(Patient patient, int userId) {
+        repository.save(patient, userId);
     }
 
     @Override
-    public List<Patient> getAll() {
-        return repository.getAll();
+    public List<Patient> getAll(int userId) {
+        return repository.getAll(userId);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import ru.javaweb.tracker.model.Patient;
 import ru.javaweb.tracker.model.User;
 import ru.javaweb.tracker.service.PatientService;
+import ru.javaweb.tracker.web.AuthorizedUser;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import static ru.javaweb.tracker.util.ValidationUtil.checkNew;
 public class PatientRestController {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
-    private PatientService service;
+    private final PatientService service;
 
     @Autowired
     public PatientRestController(PatientService service) {
@@ -25,30 +26,35 @@ public class PatientRestController {
     }
 
     public List<Patient> getAll() {
-        log.info("getAll");
-        return service.getAll();
+        int userId = AuthorizedUser.id();
+        log.info("getAll patients for user {}", userId);
+        return service.getAll(userId);
     }
 
     public Patient get(int id) {
-        log.info("get {}", id);
-        return service.get(id);
+        int userId = AuthorizedUser.id();
+        log.info("get patient {} for user {}", id, userId);
+        return service.get(id, userId);
     }
 
     public Patient create(Patient patient) {
-        log.info("create {}", patient);
+        int userId = AuthorizedUser.id();
+        log.info("create {} for user {}", patient, userId);
         checkNew(patient);
-        return service.create(patient);
+        return service.create(patient, userId);
     }
 
     public void delete(int id) {
-        log.info("delete {}", id);
-        service.delete(id);
+        int userId = AuthorizedUser.id();
+        log.info("delete {} for user {}", id, userId);
+        service.delete(id, userId);
     }
 
     public void update(Patient patient, int id) {
-        log.info("update {} with id={}", patient, id);
+        int userId = AuthorizedUser.id();
+        log.info("update {} for user {}", patient, userId);
         assureIdConsistent(patient, id);
-        service.update(patient);
+        service.update(patient, userId);
     }
 }
 

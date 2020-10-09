@@ -7,9 +7,17 @@
 <body>
 <h3>Проект трекера болезни</a></h3>
 <hr>
-<ul>
-    <li><a href="users?action=all">Users</a></li>
-    <li><a href="patients?action=all">Patients</a> </li>
-</ul>
+<!--<ul>-->
+<!--    <li><a href="users?action=all">Users</a></li>-->
+<!--    <li><a href="patients?action=all">Patients</a> </li>-->
+<!--</ul>-->
+<form method="post" action="users">
+    <b>Patients of&nbsp;</b>
+    <select name="userId">
+        <option value="1">User</option>
+        <option value="2">Admin</option>
+    </select>
+    <button type="submit">Select</button>
+</form>
 </body>
 </html>

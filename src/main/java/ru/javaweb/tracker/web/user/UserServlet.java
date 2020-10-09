@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import ru.javaweb.tracker.model.User;
 import ru.javaweb.tracker.repository.UserRepository;
 import ru.javaweb.tracker.repository.mock.InMemoryUserRepositoryImpl;
+import ru.javaweb.tracker.web.AuthorizedUser;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -29,6 +30,8 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        AuthorizedUser.setId(userId);
 
         User user = new User(request.getParameter("firstName"), request.getParameter("middleName"),
                 request.getParameter("lastName"), request.getParameter("position"), id.isEmpty() ? null : Integer.valueOf(id)

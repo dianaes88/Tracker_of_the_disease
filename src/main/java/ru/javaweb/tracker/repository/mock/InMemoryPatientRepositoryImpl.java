@@ -11,45 +11,45 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static ru.javaweb.tracker.repository.mock.InMemoryUserRepositoryImpl.ADMIN_ID;
+import static ru.javaweb.tracker.repository.mock.InMemoryUserRepositoryImpl.USER_ID;
+
 @Repository
 public class InMemoryPatientRepositoryImpl implements PatientRepository {
-    private Map<Integer, Patient> repository = new ConcurrentHashMap<>();
+    private Map<Integer, Map <Integer,Patient>> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
-        PatientsUtil.PATIENTS.forEach(this::save);
+        PatientsUtil.PATIENTS.forEach(meal->save(meal, USER_ID));
+        save(new Patient("Иван", "Крестьянский", "Сын", 11222, ADMIN_ID), ADMIN_ID);
     }
 
     @Override
-    public Patient save(Patient patient) {
-        if (patient.getUserID() == AuthorizedUser.id()) {
-            if (patient.isNew()) {
-                patient.setId(counter.incrementAndGet());
-            }
-            repository.put(patient.getId(), patient);
+    public Patient save(Patient patient, int userId) {
+        Map<Integer, Patient> patients = repository.computeIfAbsent(userId, ConcurrentHashMap::new);
+        if (patient.isNew()) {
+            patient.setId(counter.incrementAndGet());
+            patients.put(patient.getId(), patient);
+            return patient;
         }
-        return patient;
+        return patients.computeIfPresent(patient.getId(), (id, oldMeal) -> patient);
     }
 
     @Override
-    public void delete(int id) {
-        Patient p = repository.get(id);
-        if (p.getUserID() == AuthorizedUser.id()) {
-            repository.remove(id);
-        }
+    public boolean delete(int id, int userId) {
+        Map<Integer, Patient> patients = repository.get(userId);
+        return patients != null && patients.remove(id) != null;
     }
 
     @Override
-    public Patient get(int id) {
-        Patient p = repository.get(id);
-        if (p.getUserID() == AuthorizedUser.id()) {
-            return p;
-        }
-        return null;
+    public Patient get(int id, int userId) {
+        Map<Integer, Patient> patients = repository.get(userId);
+        return patients == null ? null : patients.get(id);
     }
 
     @Override
-    public List<Patient> getAll() {
-        return PatientsUtil.getPatientsByName(repository.values());
+    public List<Patient> getAll(int userId) {
+        Map<Integer, Patient> patients = repository.get(userId);
+        return PatientsUtil.getPatientsByName(patients.values());
     }
 }

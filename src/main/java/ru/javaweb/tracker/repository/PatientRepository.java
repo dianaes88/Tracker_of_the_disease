@@ -5,13 +5,13 @@ import ru.javaweb.tracker.model.Patient;
 import java.util.List;
 
 public interface PatientRepository {
-    Patient save(Patient user);
+    Patient save(Patient user, int userId);
 
     // false if not found
-    void delete(int id);
+    boolean delete(int id, int userId);
 
     // null if not found
-    Patient get(int id);
+    Patient get(int id, int userId);
 
-    List<Patient> getAll();
+    List<Patient> getAll(int userId);
 }
