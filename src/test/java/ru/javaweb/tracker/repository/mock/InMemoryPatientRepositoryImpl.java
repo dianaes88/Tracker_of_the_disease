@@ -1,21 +1,26 @@
 package ru.javaweb.tracker.repository.mock;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import ru.javaweb.tracker.model.Patient;
 import ru.javaweb.tracker.repository.PatientRepository;
 import ru.javaweb.tracker.util.PatientsUtil;
 import ru.javaweb.tracker.web.AuthorizedUser;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static ru.javaweb.tracker.repository.mock.InMemoryUserRepositoryImpl.ADMIN_ID;
-import static ru.javaweb.tracker.repository.mock.InMemoryUserRepositoryImpl.USER_ID;
+import static ru.javaweb.tracker.UserTestData.ADMIN_ID;
+import static ru.javaweb.tracker.UserTestData.USER_ID;
 
 @Repository
 public class InMemoryPatientRepositoryImpl implements PatientRepository {
+    private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepositoryImpl.class);
     private Map<Integer, Map <Integer,Patient>> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
@@ -33,6 +38,16 @@ public class InMemoryPatientRepositoryImpl implements PatientRepository {
             return patient;
         }
         return patients.computeIfPresent(patient.getId(), (id, oldMeal) -> patient);
+    }
+
+    @PostConstruct
+    public void postConstruct() {
+        log.info("+++ PostConstruct");
+    }
+
+    @PreDestroy
+    public void preDestroy() {
+        log.info("+++ PreDestroy");
     }
 
     @Override
